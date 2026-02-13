@@ -4,194 +4,155 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Ayaa ❤️</title>
-
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
 <style>
-body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #ff4e75, #ff8fa3);
-    font-family: 'Segoe UI', sans-serif;
-    overflow: hidden;
-    text-align: center;
-    color: white;
+body{
+    margin:0;
+    padding:0;
+    background:linear-gradient(135deg,#ff758c,#ff7eb3);
+    font-family:'Poppins',sans-serif;
+    text-align:center;
+    overflow:hidden;
+    color:white;
 }
-
-.container {
-    position: relative;
-    top: 18vh;
+.container{
+    position:relative;
+    top:50%;
+    transform:translateY(-50%);
 }
-
-h1 {
-    font-size: 48px;
+h1{
+    font-family:'Great Vibes',cursive;
+    font-size:3rem;
 }
-
-#name {
-    font-size: 28px;
-    margin-bottom: 15px;
+button{
+    padding:12px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    margin:10px;
+    transition:0.3s;
 }
-
-#countdown {
-    font-size: 40px;
-    margin: 20px;
+.yes{
+    background:white;
+    color:#ff4e8a;
 }
-
-button {
-    padding: 15px 35px;
-    font-size: 20px;
-    border: none;
-    border-radius: 30px;
-    margin: 15px;
-    cursor: pointer;
-    transition: 0.3s;
+.no{
+    background:transparent;
+    border:2px solid white;
+    color:white;
 }
-
-#yes {
-    background: white;
-    color: #ff4e75;
+button:hover{
+    transform:scale(1.1);
 }
-
-#yes:hover {
-    transform: scale(1.1);
+#countdown{
+    font-size:2rem;
+    margin:20px 0;
 }
-
-#no {
-    background: #444;
-    color: white;
-    position: absolute;
+.hidden{
+    display:none;
 }
-
-/* Floating Hearts */
-.heart {
-    position: absolute;
-    animation: float 6s linear infinite;
+.heart{
+    position:absolute;
+    width:20px;
+    height:20px;
+    background:red;
+    transform:rotate(45deg);
+    animation:float 5s linear infinite;
 }
-
-@keyframes float {
-    from {
-        transform: translateY(100vh) scale(1);
-        opacity: 1;
-    }
-    to {
-        transform: translateY(-10vh) scale(1.5);
-        opacity: 0;
-    }
+.heart::before,.heart::after{
+    content:'';
+    position:absolute;
+    width:20px;
+    height:20px;
+    background:red;
+    border-radius:50%;
 }
-
-/* Ring animation */
-#ring {
-    position: absolute;
-    width: 150px;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    transition: 1s ease;
+.heart::before{ top:-10px; left:0;}
+.heart::after{ left:-10px; top:0;}
+@keyframes float{
+    0%{ bottom:-10px; opacity:1;}
+    100%{ bottom:100%; opacity:0;}
 }
-
-.show-ring {
-    transform: translate(-50%, -50%) scale(1.2);
+#ring{
+    font-size:4rem;
+    animation:spin 2s infinite linear;
 }
-
-/* Photos */
-.photo {
-    width: 200px;
-    border-radius: 20px;
-    margin: 15px;
-    opacity: 0;
-    transition: opacity 2s ease;
+@keyframes spin{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
 }
-
-.show-photo {
-    opacity: 1;
+.fade-img{
+    width:200px;
+    border-radius:20px;
+    margin:10px;
+    opacity:0;
+    transition:1s;
+}
+.show{
+    opacity:1;
 }
 </style>
 </head>
 
 <body>
 
-<audio id="bgMusic" autoplay loop>
-    <source src="music.mp3" type="audio/mpeg">
-</audio>
-
-<div class="container">
-    <div id="name"></div>
-    <h1>Will You Be My Valentine? 💖</h1>
-    <div id="countdown">3</div>
-
-    <button id="yes" onclick="sayYes()">Yes 💍</button>
-    <button id="no" onmouseover="moveNo()">No 😢</button>
+<div class="container" id="main">
+    <h1>Will you be my Valentine, <span id="name">Ayaa ♥️</span>?</h1>
+    <div id="countdown">5</div>
+    <button class="yes" onclick="accept()">Yes 💖</button>
+    <button class="no" onclick="moveNo()">No 🙈</button>
 </div>
 
-<img src="ring.png" id="ring">
-
-<div id="photos" style="position:absolute; bottom:10%; width:100%;">
-    <img src="photo1.jpg" class="photo" id="p1">
-    <img src="photo2.jpg" class="photo" id="p2">
+<div id="celebration" class="hidden">
+    <h1>She said YES 💍❤️</h1>
+    <div id="ring">💍</div>
+    <p style="font-size:1.5rem;">Emergency Resident… but permanently on call for You ♥️</p>
+    <div>
+        <img src="photo1.jpg" class="fade-img" id="img1">
+        <img src="photo2.jpg" class="fade-img" id="img2">
+    </div>
 </div>
+
+<audio id="music" src="your-music.mp3"></audio>
 
 <script>
-
-// Dynamic Name
-let girlName = "Ayaa ♥️";
-document.getElementById("name").innerHTML = "For " + girlName;
-
-// Countdown
-let count = 3;
-let countdownElement = document.getElementById("countdown");
-
-let interval = setInterval(() => {
+let count=5;
+let countdownEl=document.getElementById("countdown");
+let timer=setInterval(()=>{
     count--;
-    if (count > 0) {
-        countdownElement.innerHTML = count;
-    } else {
-        countdownElement.innerHTML = "💖";
-        clearInterval(interval);
+    countdownEl.innerText=count;
+    if(count<=0){
+        clearInterval(timer);
+        countdownEl.innerText="Now choose wisely 😉";
     }
-}, 1000);
+},1000);
 
-// YES action
-function sayYes() {
-    document.getElementById("ring").classList.add("show-ring");
-
-    setTimeout(() => {
-        document.getElementById("p1").classList.add("show-photo");
-    }, 800);
-
-    setTimeout(() => {
-        document.getElementById("p2").classList.add("show-photo");
-    }, 1500);
-
-    document.querySelector(".container").innerHTML = `
-        <h1>You Said YES!!! 💍❤️</h1>
-        <h2>I Promise To Make You The Happiest, ${girlName} 😍</h2>
-    `;
+function moveNo(){
+    let btn=document.querySelector(".no");
+    btn.style.position="absolute";
+    btn.style.top=Math.random()*80+"%";
+    btn.style.left=Math.random()*80+"%";
 }
 
-// NO button escape
-function moveNo() {
-    const button = document.getElementById("no");
-    const x = Math.random() * (window.innerWidth - 100);
-    const y = Math.random() * (window.innerHeight - 50);
-    button.style.left = x + "px";
-    button.style.top = y + "px";
+function accept(){
+    document.getElementById("main").classList.add("hidden");
+    document.getElementById("celebration").classList.remove("hidden");
+    document.getElementById("music").play();
+    createHearts();
+    setTimeout(()=>{document.getElementById("img1").classList.add("show");},1000);
+    setTimeout(()=>{document.getElementById("img2").classList.add("show");},2500);
 }
 
-// Floating Hearts Generator
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (Math.random() * 20 + 20) + "px";
-    heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
-    document.body.appendChild(heart);
-
-    setTimeout(() => {
-        heart.remove();
-    }, 6000);
+function createHearts(){
+    for(let i=0;i<30;i++){
+        let heart=document.createElement("div");
+        heart.classList.add("heart");
+        heart.style.left=Math.random()*100+"%";
+        heart.style.animationDuration=(3+Math.random()*2)+"s";
+        document.body.appendChild(heart);
+    }
 }
-
-setInterval(createHeart, 300);
-
 </script>
 
 </body>
