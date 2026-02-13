@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Ayaa ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    padding:0;
+    background:linear-gradient(135deg,#ff4e8a,#ff9eb5);
+    font-family:'Poppins',sans-serif;
+    text-align:center;
+    overflow:hidden;
+    color:white;
+}
+
+/* LOCK SCREEN */
+#locked{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+
+/* MAIN */
+.container{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    display:none;
+    animation:fadeIn 2s forwards;
+}
+
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+h1{
+    font-family:'Great Vibes',cursive;
+    font-size:3rem;
+}
+
+button{
+    padding:12px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    margin:10px;
+    transition:0.3s;
+}
+
+.yes{ background:white; color:#ff4e8a;}
+.no{ background:transparent; border:2px solid white; color:white;}
+
+button:hover{ transform:scale(1.1);}
+
+/* HAND & RING */
+.hand-container{
+    position:relative;
+    width:300px;
+    margin:20px auto;
+}
+
+.hand{ width:100%; }
+
+.ring{
+    position:absolute;
+    width:60px;
+    top:0;
+    left:-100px;
+    transition:1.5s ease-in-out;
+}
+
+.ring.move{
+    top:110px;
+    left:130px;
+}
+
+/* Name Glow */
+.glow{
+    font-size:2rem;
+    font-weight:bold;
+    animation:glow 1.5s infinite alternate;
+}
+
+@keyframes glow{
+    from{text-shadow
